@@ -1,24 +1,5 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
@@ -38,19 +19,8 @@ body {
   background: radial-gradient(#282c34, #282c34);
 }
 
-.header-background {
-  position: absolute;
-  width: 100%;
-  height: 320px;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
-
-svg {
-  display: block;
-  width: 100%;
-  height: auto;
+h2 {
+  font-size: 2rem;
 }
 
 .not-found,
