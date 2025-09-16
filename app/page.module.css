@@ -73,3 +73,15 @@
   margin: 2rem auto;
   text-align: center;
 }
+
+.section h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #ddd6cb;
+}
+
+.section p {
+  line-height: 2;
+  margin: 0;
+}
