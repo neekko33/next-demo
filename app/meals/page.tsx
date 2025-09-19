@@ -6,7 +6,6 @@ import { getMeals } from '@/lib/meals';
 import Loading from '@/components/meals/loading-out';
 
 async function Meals() {
-  'use cache'
   const meals = await getMeals()
   return <MealsGrid meals={meals} />
 }

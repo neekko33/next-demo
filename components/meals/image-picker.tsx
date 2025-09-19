@@ -29,6 +29,7 @@ export default function ImagePicker({ label, name }: { label: string, name: stri
           name={name} 
           ref={imageInputRef} 
           onChange={handleImageChange} 
+          required
         />
         <div className={classes.preview}>
           { !selectedFile && <p>No image picked yet.</p> }
