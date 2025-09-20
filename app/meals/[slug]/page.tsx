@@ -3,7 +3,8 @@ import classes from './page.module.css';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
-export async function generateMetadata( { params: { slug } }: { params: { slug: string } }) {
+export async function generateMetadata( { params }: { params: { slug: string } }) {
+  const { slug } = params
   const meal = await getMealBySlug(slug)
 
   if (!meal) return notFound()
@@ -14,7 +15,8 @@ export async function generateMetadata( { params: { slug } }: { params: { slug: 
   } 
 }
 
-export default async function Meal({ params: { slug } }: { params: { slug: string } }) {
+export default async function Meal({ params }: { params: { slug: string } }) {
+  const { slug } = params
   const meal = await getMealBySlug(slug)
 
   if (!meal) {
