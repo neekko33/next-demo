@@ -2,7 +2,27 @@
 import { saveMeal } from '@/lib/meals'
 import { redirect } from 'next/navigation'
 
-export const shareMeal = async (formData: FormData) => {
+const isInvalidText = (text: string | null): boolean => {
+  return !text || text.trim() === ''
+}
+
+const isInvalidEmail = (email: string | null): boolean => {
+  if (isInvalidText(email)) {
+    return true
+  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return !emailRegex.test(email as string)
+}
+
+const isInvalidFile = (file: File | null): boolean => {
+  if (!file || file.size === 0) {
+    return true
+  }
+  const validTypes = ['image/jpeg', 'image/png', 'image/gif']
+  return !validTypes.includes(file.type)
+}
+
+export const shareMeal = async (prevState, formData: FormData) => {
   const meal = {
     title: formData.get('title'),
     summary: formData.get('summary'),
@@ -11,9 +31,33 @@ export const shareMeal = async (formData: FormData) => {
     creator: formData.get('name'),
     creator_email: formData.get('email'),
   }
+  
+  const errors: string[] = []
+  Object.entries(meal).forEach(([key, value]) => {
+    switch (key) {
+      case 'image':
+        if (isInvalidFile(value as File | null)) {
+          errors.push('Please provide a valid image file.')
+        }
+        break
+      case 'creator_email':
+        if (isInvalidEmail(value as string | null)) {
+          errors.push('Please provide a valid email address.')
+        }
+        break
+      default:
+        if (isInvalidText(value as string | null)) {
+          errors.push(`Please provide a valid ${key}.`)
+        }
+        break
+    }
+  })
+  if (errors.length > 0) {
+    return {
+      errors,
+    }
+  }
 
   await saveMeal(meal)
-
   redirect('/meals')
 }
-
