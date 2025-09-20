@@ -7,7 +7,6 @@ import fs from 'fs'
 const db = sql('data/meals.db')
 
 export async function getMeals(): Promise<Meal[]> {
-  await new Promise(resolve => setTimeout(resolve, 2000))
   return db.prepare('SELECT * FROM meals').all() as Meal[]
 }
 
