@@ -1,5 +1,6 @@
 'use server'
 import { saveMeal } from '@/lib/meals'
+import { Meal } from '@/types'
 import { redirect } from 'next/navigation'
 
 const isInvalidText = (text: string | null): boolean => {
@@ -18,11 +19,11 @@ const isInvalidFile = (file: File | null): boolean => {
   if (!file || file.size === 0) {
     return true
   }
-  const validTypes = ['image/jpeg', 'image/png', 'image/gif']
+  const validTypes = ['image/jpeg', 'image/png']
   return !validTypes.includes(file.type)
 }
 
-export const shareMeal = async (prevState, formData: FormData) => {
+export const shareMeal = async (prevState: { errors: string[]}, formData: FormData) => {
   const meal = {
     title: formData.get('title'),
     summary: formData.get('summary'),
@@ -58,6 +59,6 @@ export const shareMeal = async (prevState, formData: FormData) => {
     }
   }
 
-  await saveMeal(meal)
+  await saveMeal(meal as Meal & { image: File })
   redirect('/meals')
 }
